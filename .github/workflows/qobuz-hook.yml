@@ -1,0 +1,26 @@
+name: qobuz-hook (armhf libassert_hook.so)
+
+on:
+  push:
+    paths: [ 'tools/qobuz-hook/**', '.github/workflows/qobuz-hook.yml' ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: armhf toolchain
+        run: sudo apt-get update && sudo apt-get install -y gcc-arm-linux-gnueabihf
+      - name: Build
+        run: |
+          cd tools/qobuz-hook
+          arm-linux-gnueabihf-gcc -shared -fPIC -O2 -Wno-unused-result \
+            -o libassert_hook.so assert_hook.c qbz_ctl.c -ldl -lpthread
+          arm-linux-gnueabihf-readelf -h -d libassert_hook.so | grep -E 'Flags|NEEDED'
+          arm-linux-gnueabihf-objdump -T libassert_hook.so | grep -o 'GLIBC_[0-9.]*' | sort -uV
+          sha256sum libassert_hook.so
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libassert_hook-armhf
+          path: tools/qobuz-hook/libassert_hook.so
