@@ -2,8 +2,11 @@ name: qobuz-hook (armhf libassert_hook.so)
 
 on:
   push:
-    paths: [ 'tools/qobuz-hook/**', '.github/workflows/qobuz-hook.yml' ]
+    paths: [ 'tools/qobuz-hook/*.c', '.github/workflows/qobuz-hook.yml' ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -20,6 +23,13 @@ jobs:
           arm-linux-gnueabihf-readelf -h -d libassert_hook.so | grep -E 'Flags|NEEDED'
           arm-linux-gnueabihf-objdump -T libassert_hook.so | grep -o 'GLIBC_[0-9.]*' | sort -uV
           sha256sum libassert_hook.so
+          arm-linux-gnueabihf-objdump -T libassert_hook.so | grep -o 'GLIBC_[0-9.]*' | sort -uV > libassert_hook.glibc
+      - name: Commit the built library
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/qobuz-hook/libassert_hook.so tools/qobuz-hook/libassert_hook.glibc
+          git diff --cached --quiet || { git commit -m "tools/qobuz-hook: built libassert_hook.so (armhf)"; git push; }
       - uses: actions/upload-artifact@v4
         with:
           name: libassert_hook-armhf
