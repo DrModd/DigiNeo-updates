@@ -1,5 +1,5 @@
-version=1.0.7
-file=packages/digineo-1.0.7.tar.gz
-sha256=83a9ab53329ea47e7ed5bfa242a16ea3c1fc8900faecf602cbc4d54b61133e4f
-size=326896
-notes=Накопительное (всё из 1.0.1–1.0.6). Новое: официальный Spotify Soloist (ключ вводится в вебе: Усилитель → Spotify Soloist; плеер и свежая glibc плата скачивает сама, шим libpulse собирает на плате), без ключа — go-librespot; исправлен запуск go-librespot (HOME).
+version=1.0.8
+file=packages/digineo-1.0.8.tar.gz
+sha256=1d3a0b3837ca62e19ffa1b70644e9dbe5660b99cee0e5b4d5b4965de58973d1c
+size=327029
+notes=Накопительное (всё из 1.0.1–1.0.7). Главное меню: «DigiNeo» вместо «Фокс», «Обновление прошивки» открывает онлайн-обновление, пункты «Обработка звука» и «Spotify Soloist», убран «Классический интерфейс PureFox», версия в меню обновляется.
