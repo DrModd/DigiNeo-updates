@@ -7,7 +7,7 @@ set -euo pipefail
 K=$(readlink -f "$1"); OUT=$(readlink -f "$2"); HERE=$(dirname "$(readlink -f "$0")")
 M=$K/dwc2neo-mod
 rm -rf "$M"; mkdir -p "$M" "$OUT"
-cp "$K"/drivers/usb/dwc2/{core.c,core.h,core_intr.c,platform.c,drd.c,params.c,debugfs.c,gadget.c,hcd.c,hcd.h,hcd_intr.c,hcd_queue.c,hcd_ddma.c,hw.h} "$M"/
+cp "$K"/drivers/usb/dwc2/*.h "$K"/drivers/usb/dwc2/{core.c,core_intr.c,platform.c,drd.c,params.c,debugfs.c,gadget.c,hcd.c,hcd_intr.c,hcd_queue.c,hcd_ddma.c} "$M"/
 cd "$M"
 # 1) свои имена: встроенный драйвер остаётся в ядре, наш регистрируется как dwc2neo
 sed -i -E '/^EXPORT_SYMBOL(_GPL)?\(.*\);/d' *.c
