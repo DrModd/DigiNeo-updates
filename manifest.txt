@@ -1,5 +1,5 @@
-version=1.0.8
-file=packages/digineo-1.0.8.tar.gz
-sha256=1d3a0b3837ca62e19ffa1b70644e9dbe5660b99cee0e5b4d5b4965de58973d1c
-size=327029
-notes=Накопительное (всё из 1.0.1–1.0.7). Главное меню: «DigiNeo» вместо «Фокс», «Обновление прошивки» открывает онлайн-обновление, пункты «Обработка звука» и «Spotify Soloist», убран «Классический интерфейс PureFox», версия в меню обновляется.
+version=1.0.9
+file=packages/digineo-1.0.9.tar.gz
+sha256=58be6b5d1d1dc14b4fe32daab204ea844fd92c5c389115c6a580d73e53322b6b
+size=446956
+notes=USB-вход ПК -> NEO3 (UAC2): свой модуль dwc2neo, повторно запускаемый гаджет, digineo-usbprep; настройки /etc/digineo/uac2.conf
