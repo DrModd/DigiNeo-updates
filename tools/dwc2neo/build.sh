@@ -46,6 +46,14 @@ assert s.count(b) == 1, 'hw_disable block'
 s = s.replace(b, "\t/* dwc2neo: clocks stay on (no VBUS detect on the NEO3 header) */")
 open('platform.c', 'w').write(s)
 PY
+# 4) сброс шины: всегда перезапускать ядро (нет VBUS-прерываний, флаг connected не доверять)
+python3 - <<'PY'
+s = open('gadget.c').read()
+a = "if (usb_status & GOTGCTL_BSESVLD && connected)"
+assert s.count(a) == 1, 'usbrst connected check'
+s = s.replace(a, "if (usb_status & GOTGCTL_BSESVLD) /* dwc2neo */")
+open('gadget.c', 'w').write(s)
+PY
 cat > Makefile <<'MK'
 obj-m := dwc2neo.o
 dwc2neo-y := core.o core_intr.o platform.o drd.o params.o debugfs.o gadget.o hcd.o hcd_intr.o hcd_queue.o hcd_ddma.o
