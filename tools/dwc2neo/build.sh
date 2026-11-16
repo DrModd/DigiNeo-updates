@@ -29,6 +29,7 @@ s = s.replace(pat, '''\t/* dwc2neo: DigiNeo, NanoPi NEO3 */
 \thsotg->params.dma_desc_enable = false;
 \thsotg->params.dma_desc_fs_enable = false;
 \thsotg->params.g_dma = neo_dma;
+\thsotg->params.no_clock_gating = true;
 \tif (neo_fs)
 \t\thsotg->params.speed = DWC2_SPEED_PARAM_FULL;
 ''' + pat)
