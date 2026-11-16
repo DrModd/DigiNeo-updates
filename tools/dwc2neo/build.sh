@@ -28,7 +28,11 @@ s = s.replace(pat, '''\t/* dwc2neo: DigiNeo, NanoPi NEO3 */
 \thsotg->params.g_dma_desc = false;
 \thsotg->params.dma_desc_enable = false;
 \thsotg->params.dma_desc_fs_enable = false;
+\thsotg->params.g_dma = neo_dma;
+\tif (neo_fs)
+\t\thsotg->params.speed = DWC2_SPEED_PARAM_FULL;
 ''' + pat)
+s = s.replace('#include "core.h"', '#include "core.h"\nstatic bool neo_dma;\nmodule_param(neo_dma, bool, 0444);\nMODULE_PARM_DESC(neo_dma, "gadget DMA (default off)");\nstatic bool neo_fs;\nmodule_param(neo_fs, bool, 0444);\nMODULE_PARM_DESC(neo_fs, "force full-speed");', 1)
 open('params.c', 'w').write(s)
 PY
 # 3) всегда режим устройства (на заголовке NEO3 нет ID/VBUS), такт контроллера не отключать
