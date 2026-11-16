@@ -31,6 +31,17 @@ s = s.replace(pat, '''\t/* dwc2neo: DigiNeo, NanoPi NEO3 */
 ''' + pat)
 open('params.c', 'w').write(s)
 PY
+# 3) всегда режим устройства (на заголовке NEO3 нет ID/VBUS), такт контроллера не отключать
+python3 - <<'PY'
+s = open('platform.c').read()
+a = "\thsotg->dr_mode = usb_get_dr_mode(hsotg->dev);"
+assert s.count(a) == 1, 'dr_mode line'
+s = s.replace(a, "\thsotg->dr_mode = USB_DR_MODE_PERIPHERAL; /* dwc2neo: always device */")
+b = "\tif (hsotg->dr_mode == USB_DR_MODE_PERIPHERAL)\n\t\tdwc2_lowlevel_hw_disable(hsotg);"
+assert s.count(b) == 1, 'hw_disable block'
+s = s.replace(b, "\t/* dwc2neo: clocks stay on (no VBUS detect on the NEO3 header) */")
+open('platform.c', 'w').write(s)
+PY
 cat > Makefile <<'MK'
 obj-m := dwc2neo.o
 dwc2neo-y := core.o core_intr.o platform.o drd.o params.o debugfs.o gadget.o hcd.o hcd_intr.o hcd_queue.o hcd_ddma.o
