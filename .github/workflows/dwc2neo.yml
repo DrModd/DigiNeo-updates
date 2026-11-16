@@ -1,0 +1,48 @@
+name: dwc2neo (dwc2.ko для NanoPi NEO3, ядро 5.15.93-PureOS)
+
+on:
+  push:
+    paths: [ 'tools/dwc2neo/build.sh', 'tools/dwc2neo/kconfig', '.github/workflows/dwc2neo.yml' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: sudo apt-get update && sudo apt-get install -y gcc-aarch64-linux-gnu bc flex bison libssl-dev libelf-dev xz-utils kmod
+      - name: Kernel source 5.15.93
+        run: |
+          curl -fsSL -o /tmp/linux.tar.xz https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.93.tar.xz
+          tar -xJf /tmp/linux.tar.xz -C /tmp
+      - name: Prepare (same config as the board)
+        run: |
+          K=/tmp/linux-5.15.93
+          cp tools/dwc2neo/kconfig $K/.config
+          make -C $K ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+          echo "== config differences (new compiler) =="
+          diff <(grep -E '^(CONFIG_|# CONFIG_)' tools/dwc2neo/kconfig | sort) <(grep -E '^(CONFIG_|# CONFIG_)' $K/.config | sort) | head -60 || true
+          make -C $K ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_prepare
+          grep -E 'UTS_RELEASE' $K/include/generated/utsrelease.h
+      - name: Build dwc2neo.ko
+        run: bash tools/dwc2neo/build.sh /tmp/linux-5.15.93 tools/dwc2neo/out
+      - name: Report
+        run: |
+          file tools/dwc2neo/out/dwc2neo.ko
+          modinfo tools/dwc2neo/out/dwc2neo.ko | grep -E 'vermagic|license|alias'
+          sha256sum tools/dwc2neo/out/dwc2neo.ko
+      - name: Commit the module
+        run: |
+          mkdir -p tools/dwc2neo/bin && cp tools/dwc2neo/out/dwc2neo.ko tools/dwc2neo/bin/dwc2neo.ko
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f tools/dwc2neo/bin/dwc2neo.ko
+          git diff --cached --quiet || { git commit -m "tools/dwc2neo: built dwc2neo.ko (5.15.93-PureOS)"; git push; }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dwc2neo
+          path: tools/dwc2neo/bin/dwc2neo.ko
