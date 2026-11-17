@@ -1,5 +1,5 @@
-version=1.0.11
-file=packages/digineo-1.0.11.tar.gz
-sha256=06f87baf2e11c6db32c9a2dd425e7b4b64aa050045c4ef9413c0390b059b23c4
-size=481128
-notes=USB-вход: UAC2-гаджет с патчем DigiFox (много частот, /sys/class/u_audio для uac2_router)
+version=1.0.12
+file=packages/digineo-1.0.12.tar.gz
+sha256=f4a62f17320e680aee04285d34c2662bda0ba62976001743c69a74073c1676c7
+size=481144
+notes=USB-вход: DMA в dwc2neo (поток от Windows больше не обрывается), исправлен u_audio
