@@ -1,5 +1,5 @@
-version=1.0.15
-file=packages/digineo-1.0.15.tar.gz
-sha256=60f9249aa60cb3a8f6655f5bfc3a1606ee8d1b07f4fce05bda0a0e5a19d5a34e
-size=481226
-notes=USB-вход: работает после сна ПК, 192 кГц без искажений
+version=1.0.16
+file=packages/digineo-1.0.16.tar.gz
+sha256=cdc9213d9317d4758d5980213e0cb8a054ddcb12ef6f0659f6bc65a472f5af5f
+size=481235
+notes=USB-вход: частоты 44.1-192 кГц по умолчанию (добавлены 88.2 и 176.4)
