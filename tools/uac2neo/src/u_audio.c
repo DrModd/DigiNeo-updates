@@ -2090,16 +2090,17 @@ void g_audio_cleanup(struct g_audio *g_audio)
 
 	cancel_work_sync(&g_audio->work);
 	cancel_delayed_work_sync(&g_audio->ppm_work);
-	device_destroy(g_audio->device->class, g_audio->device->devt);
-	g_audio->device = NULL;
-
+	/* оба устройства класса имеют devt 0:0, device_destroy() по devt находит не то —
+	 * снимаем каждое напрямую */
 	uac = g_audio->uac;
 	g_audio->uac = NULL;
-
-	/* Cleanup sysfs attributes */
 	if (uac->dev) {
 		sysfs_remove_group(uac->kobj, &uac_attr_group);
-		device_destroy(audio_class, uac->dev->devt);
+		device_unregister(uac->dev);
+	}
+	if (g_audio->device) {
+		device_unregister(g_audio->device);
+		g_audio->device = NULL;
 	}
 
 	card = uac->card;
