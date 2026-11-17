@@ -1,5 +1,5 @@
-version=1.0.9
-file=packages/digineo-1.0.9.tar.gz
-sha256=58be6b5d1d1dc14b4fe32daab204ea844fd92c5c389115c6a580d73e53322b6b
-size=446956
-notes=USB-вход ПК -> NEO3 (UAC2): свой модуль dwc2neo, повторно запускаемый гаджет, digineo-usbprep; настройки /etc/digineo/uac2.conf
+version=1.0.10
+file=packages/digineo-1.0.10.tar.gz
+sha256=a369698f75f503c007e4ca0bccf78b68eb4e3a264496eabb406089534a9167c1
+size=449886
+notes=Обновление прошивки на любом образе: страница update.php и digineo-update (раньше 404); включает USB-вход 1.0.9
