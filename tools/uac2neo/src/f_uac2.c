@@ -1795,11 +1795,12 @@ static void uac2_cs_control_sam_freq(struct usb_ep *ep, struct usb_request *req)
 	struct f_uac2 *uac2 = func_to_uac2(fn);
 	u32 val;
 
+	dev_info(&agdev->gadget->dev, "SET_CUR freq: status %d actual %u length %u buf %*ph\n",
+		req->status, req->actual, req->length, 8, req->buf);
 	if (req->actual != 4)
 		return;
 
 	val = le32_to_cpu(*((__le32 *)req->buf));
-	dev_dbg(&agdev->gadget->dev, "%s val: %d.\n", __func__, val);
 	if (uac2->clock_id == USB_IN_CLK_ID) {
 		u_audio_set_playback_srate(agdev, val);
 	} else if (uac2->clock_id == USB_OUT_CLK_ID) {
