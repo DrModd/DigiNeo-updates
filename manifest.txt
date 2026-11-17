@@ -1,5 +1,5 @@
-version=1.0.17
-file=packages/digineo-1.0.17.tar.gz
-sha256=cda9010354ebce09706300fb12e9101431e77df2890bdb268d7156a3558c55de
-size=481396
-notes=USB-вход сам включается после перезагрузки, если режим USB был выбран
+version=1.0.18
+file=packages/digineo-1.0.18.tar.gz
+sha256=36448d87a63b5596b614313f5b34a3cd494a2dc4378868a2ef9a0a0c8ea781d8
+size=481503
+notes=Исправлена установка: автозапуск USB-входа после перезагрузки, номер версии
