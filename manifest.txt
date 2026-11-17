@@ -1,5 +1,5 @@
-version=1.0.10
-file=packages/digineo-1.0.10.tar.gz
-sha256=a369698f75f503c007e4ca0bccf78b68eb4e3a264496eabb406089534a9167c1
-size=449886
-notes=Обновление прошивки на любом образе: страница update.php и digineo-update (раньше 404); включает USB-вход 1.0.9
+version=1.0.11
+file=packages/digineo-1.0.11.tar.gz
+sha256=06f87baf2e11c6db32c9a2dd425e7b4b64aa050045c4ef9413c0390b059b23c4
+size=481128
+notes=USB-вход: UAC2-гаджет с патчем DigiFox (много частот, /sys/class/u_audio для uac2_router)
