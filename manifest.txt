@@ -1,5 +1,5 @@
-version=1.0.14
-file=packages/digineo-1.0.14.tar.gz
-sha256=6b762d77e1e48731bfae0f08c4bf1e6be214adaac2bb84ca134d5da07a414c97
-size=481177
-notes=USB-вход: 44.1/48/96/192 кГц из Windows (пакеты в одну транзакцию), DMA
+version=1.0.15
+file=packages/digineo-1.0.15.tar.gz
+sha256=60f9249aa60cb3a8f6655f5bfc3a1606ee8d1b07f4fce05bda0a0e5a19d5a34e
+size=481226
+notes=USB-вход: работает после сна ПК, 192 кГц без искажений
