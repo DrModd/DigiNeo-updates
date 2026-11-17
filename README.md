@@ -36,3 +36,4 @@ git add -A && git commit -m "1.0.2" && git push
 | 1.0.10 | **Накопительное.** «Обновление прошивки» работает на любом образе: своя страница `update.php` (на старых платах было 404) и `/opt/digineo/bin/digineo-update` (`check` / `install`, проверка sha256, журнал `/var/log/digineo-update.log`); включает USB-вход из 1.0.9 |
 | 1.0.11 | USB-вход: патченный UAC2 (u_audio/usb_f_uac2) для uac2_router |
 | 1.0.12 | USB-вход: DMA по умолчанию, исправление u_audio |
+| 1.0.13 | USB-вход: новый PID гаджета |

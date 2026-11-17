@@ -1,5 +1,5 @@
-version=1.0.12
-file=packages/digineo-1.0.12.tar.gz
-sha256=f4a62f17320e680aee04285d34c2662bda0ba62976001743c69a74073c1676c7
-size=481144
-notes=USB-вход: DMA в dwc2neo (поток от Windows больше не обрывается), исправлен u_audio
+version=1.0.13
+file=packages/digineo-1.0.13.tar.gz
+sha256=187f6466ca73abd206f7f70d6d81f8cc5b36b6e988811e892f8535a23ab4e499
+size=481166
+notes=USB-вход: новый PID гаджета (Windows забывает старую неудачную настройку), DMA, u_audio
