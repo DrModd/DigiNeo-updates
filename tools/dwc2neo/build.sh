@@ -55,6 +55,15 @@ assert s.count(a) == 1, 'usbrst connected check'
 s = s.replace(a, "if (usb_status & GOTGCTL_BSESVLD) /* dwc2neo */")
 open('gadget.c', 'w').write(s)
 PY
+# 5) suspend шины: не уходить в L2 — такт не гасится, а штатный код при пробуждении без
+#    clock gating/PPD так и оставляет L2, после чего ep0 отвечает -EAGAIN (ПК после сна не видит устройство)
+python3 - <<'PY'
+s = open('core_intr.c').read()
+a = "\t\t\thsotg->lx_state = DWC2_L2;\n\n\t\t\t/* Call gadget suspend callback */"
+assert s.count(a) == 1, 'suspend L2'
+s = s.replace(a, "\t\t\t/* dwc2neo: stay in L0 */\n\n\t\t\t/* Call gadget suspend callback */")
+open('core_intr.c', 'w').write(s)
+PY
 cat > Makefile <<'MK'
 obj-m := dwc2neo.o
 dwc2neo-y := core.o core_intr.o platform.o drd.o params.o debugfs.o gadget.o hcd.o hcd_intr.o hcd_queue.o hcd_ddma.o
