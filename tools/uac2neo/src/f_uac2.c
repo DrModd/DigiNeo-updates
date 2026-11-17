@@ -779,11 +779,22 @@ static int set_ep_max_packet_size_bint(struct device *dev, const struct f_uac2_o
 			max_size_bw = get_max_bw_for_bint(uac2_opts, bint, 8000, is_playback);
 		} else {
 			/* checking bInterval from 4 to 1 whether the required bandwidth fits */
+			/* DigiNeo: сначала ищем интервал, при котором пакет помещается в одну
+			 * транзакцию (<= 1024): high-bandwidth на dwc2 ненадёжен и Windows
+			 * такое устройство не опознаёт (192 кГц при bInterval 4 = 1544 байта) */
 			for (bint = 4; bint > 0; --bint) {
 				max_size_bw = get_max_bw_for_bint(
 					uac2_opts, bint, 8000, is_playback);
-				if (max_size_bw <= max_size_ep)
+				if (max_size_bw <= 1024)
 					break;
+			}
+			if (bint == 0) {
+				for (bint = 4; bint > 0; --bint) {
+					max_size_bw = get_max_bw_for_bint(
+						uac2_opts, bint, 8000, is_playback);
+					if (max_size_bw <= max_size_ep)
+						break;
+				}
 			}
 		}
 		break;
